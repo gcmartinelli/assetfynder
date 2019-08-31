@@ -6,8 +6,8 @@ class Fetch(Fetcher):
 	def __init__(self):
 		self.service_url = 'https://certspotter.com/api/v0/certs?domain={}'
 	
-	def subdomains(self, domain):
-		c = self.fetch(domain)
+	def subdomains(self, domain, verbose):
+		c = self.fetch(domain, verbose)
 		try:
 			json_ = json.loads(c)
 			if json_:

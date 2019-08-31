@@ -11,12 +11,12 @@ services = [['threatcrowd', threatcrowd.Fetch()],
 			['hackertarget', hackertarget.Fetch()],]
 
 
-def get_subs(domain, fetcher, fout=False):
+def get_subs(domain, fetcher, fout=False, verbose=False):
 	''' Receives a domain name and a fetcher object,
 		returns a list of subdomains, or None.
 	'''	
 	try:
-		subs = fetcher.subdomains(domain)
+		subs = fetcher.subdomains(domain, verbose)
 		# I preffer printing here so the user gets feedback ASAP
 		if not fout and subs:
 			for sub in subs:
@@ -25,15 +25,17 @@ def get_subs(domain, fetcher, fout=False):
 			return []
 		return subs
 	except Exception as e:
-		print(e)
+		if verbose:
+			print(e)
 		return None
 
 
 @click.command()
+@click.option('--verbose', is_flag=True)
 @click.argument('domain')
 @click.argument('out', type=click.File('a'), default='-',
 				required=False)
-def cli(domain, out):
+def cli(verbose, domain, out):
 	''' Returns possible subdomains for a 
 		given URL. Can append results to an output filename
 		if one is given; else prints to stdout. '''	
@@ -41,11 +43,11 @@ def cli(domain, out):
 		fout = True
 	else:
 		fout = False
-
-	print(f'> Collecting subdomains for {domain}')
-	print('------------------------------------')
+	if verbose:
+		print(f'> Collecting subdomains for {domain}')
+		print('------------------------------------')
 	with Pool(cpu_count()) as p:
-		l = p.starmap_async(get_subs, [(domain, x[1], fout) for x in services]).get()
+		l = p.starmap_async(get_subs, [(domain, x[1], fout, verbose) for x in services]).get()
 		subdomains = list(set([domain for sublist in l for domain in sublist]))
 	if fout:
 		for sub in subdomains:

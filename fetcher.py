@@ -6,7 +6,7 @@ class Fetcher:
 	'''
 	timeout = 10
 
-	def fetch(self, domain):
+	def fetch(self, domain, verbose):
 		try:
 			fetch_url = self.service_url.format(domain)
 			r = requests.get(fetch_url, timeout=self.timeout)
@@ -15,5 +15,6 @@ class Fetcher:
 			else:
 				return None
 		except Exception as e:
-			print(e)
+			if verbose:
+				print(e)
 			return None

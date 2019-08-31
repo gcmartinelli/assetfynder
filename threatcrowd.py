@@ -6,9 +6,9 @@ class Fetch(Fetcher):
 	def __init__(self):
 		self.service_url = 'https://www.threatcrowd.org/searchApi/v2/domain/report/?domain={}'
 	
-	def subdomains(self, domain):
+	def subdomains(self, domain, verbose):
 		try:
-			c = self.fetch(domain)
+			c = self.fetch(domain, verbose)
 			json_ = json.loads(c)
 			if json_:
 				return json_['subdomains']	

@@ -5,8 +5,8 @@ class Fetch(Fetcher):
 	def __init__(self):
 		self.service_url = 'https://api.hackertarget.com/hostsearch/?q={}'
 	
-	def subdomains(self, domain):
-		c = self.fetch(domain)
+	def subdomains(self, domain, verbose):
+		c = self.fetch(domain, verbose)
 		try:
 			subs = []
 			for line in c.split('\n'):
