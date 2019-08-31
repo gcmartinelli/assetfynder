@@ -16,7 +16,9 @@ Usage: assetfynder [OPTIONS] DOMAIN [OUT]
   output filename if one is given; else prints to stdout.
 
 Options:
-  --help  Show this message and exit.
+  --verbose  Output more information during execution
+  --help     Show this message and exit.
+
 ```
 
 `assetfynder example.com` prints to the terminal all discovered subdomains for example.com
