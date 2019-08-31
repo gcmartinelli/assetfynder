@@ -6,7 +6,8 @@ import threatcrowd, certspotter
 
 
 # A list of fetcher objects
-services = []
+services = [['threatcrowd', threatcrowd.Fetch()],
+			['certspotter', certspotter.Fetch()],]
 
 def get_subs(domain, fetcher, fout=False):
 	''' Receives a domain name and a fetcher object,
