@@ -2,12 +2,13 @@
 import click
 import requests
 from multiprocessing import Pool, cpu_count
-import threatcrowd, certspotter, hackertarget
+import threatcrowd, certspotter, hackertarget, wayback
 
 
 # A list of fetcher objects
 services = [['threatcrowd', threatcrowd.Fetch()],
 			['certspotter', certspotter.Fetch()],
+			['wayback', wayback.Fetch()],
 			['hackertarget', hackertarget.Fetch()],]
 
 
