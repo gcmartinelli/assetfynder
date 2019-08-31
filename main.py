@@ -33,17 +33,16 @@ def cli(domain, out):
 	''' Returns possible subdomains for a 
 		given URL. Can append results to an output filename
 		if one is given; else prints to stdout. '''	
-	if out != '-':
+	if out.name != '<stdout>':
 		fout = True
 	else:
 		fout = False
 
 	print(f'> Collecting subdomains for {domain}')
 	print('------------------------------------')
-
 	with Pool(cpu_count()) as p:
-		l = p.starmap(get_subs, [(domain, x[1], fout) for x in services])
-	subdomains = list(set([domain for sublist in l for domain in sublist]))
+		l = p.starmap_async(get_subs, [(domain, x[1], fout) for x in services]).get()
+		subdomains = list(set([domain for sublist in l for domain in sublist]))
 	if fout:
 		for sub in subdomains:
 			click.echo(sub, file=out)
