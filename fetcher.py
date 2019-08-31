@@ -11,7 +11,7 @@ class Fetcher:
 			fetch_url = self.service_url.format(domain)
 			r = requests.get(fetch_url, timeout=self.timeout)
 			if r.status_code == 200:
-				return r.json()
+				return r.text
 			else:
 				return None
 		except Exception as e:
