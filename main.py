@@ -31,7 +31,8 @@ def get_subs(domain, fetcher, fout=False, verbose=False):
 
 
 @click.command()
-@click.option('--verbose', is_flag=True)
+@click.option('--verbose', is_flag=True,
+				 help='Output more information during execution')
 @click.argument('domain')
 @click.argument('out', type=click.File('a'), default='-',
 				required=False)
