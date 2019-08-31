@@ -2,12 +2,14 @@
 import click
 import requests
 from multiprocessing import Pool, cpu_count
-import threatcrowd, certspotter
+import threatcrowd, certspotter, hackertarget
 
 
 # A list of fetcher objects
 services = [['threatcrowd', threatcrowd.Fetch()],
-			['certspotter', certspotter.Fetch()],]
+			['certspotter', certspotter.Fetch()],
+			['hackertarget', hackertarget.Fetch()],]
+
 
 def get_subs(domain, fetcher, fout=False):
 	''' Receives a domain name and a fetcher object,
@@ -16,9 +18,11 @@ def get_subs(domain, fetcher, fout=False):
 	try:
 		subs = fetcher.subdomains(domain)
 		# I preffer printing here so the user gets feedback ASAP
-		if not fout:
+		if not fout and subs:
 			for sub in subs:
 				print(sub)
+		elif not subs:
+			return []
 		return subs
 	except Exception as e:
 		print(e)
