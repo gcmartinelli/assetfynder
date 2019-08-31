@@ -11,7 +11,15 @@ class Fetch(Fetcher):
 		try:
 			json_ = json.loads(c)
 			if json_:
-				return json_[0]['dns_names']	
+				# Certspotter returns many results of sites that use the
+				# same certificate but don't seem to have a strong link
+				# with the searched domain. So I filter these out
+				subs = []
+				for block in json_:
+					for sub in block['dns_names']:
+						if domain in sub and sub not in subs:
+							subs.append(sub)
+				return subs
 			else:
 				return None
 		except Exception as e:
