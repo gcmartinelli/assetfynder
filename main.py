@@ -34,13 +34,16 @@ def get_subs(domain, fetcher, fout=False, verbose=False):
 @click.command()
 @click.option('--verbose', is_flag=True,
 				 help='Output more information during execution')
+@click.option('--nowayback', is_flag=True,
+				help='Do not incorporate wayback machine results')
 @click.argument('domain')
 @click.argument('out', type=click.File('a'), default='-',
 				required=False)
-def cli(verbose, domain, out):
+def cli(verbose, nowayback, domain, out):
 	''' Returns possible subdomains for a 
 		given URL. Can append results to an output filename
 		if one is given; else prints to stdout. '''	
+	global services
 	if out.name != '<stdout>':
 		fout = True
 	else:
@@ -49,6 +52,12 @@ def cli(verbose, domain, out):
 		print(f'> Collecting subdomains for {domain}')
 		print('------------------------------------')
 	with Pool(cpu_count()) as p:
+		if nowayback: # In some cases you may want to discard historic results
+			serv_temp = []
+			for s in services:
+				if s[0] != 'wayback':
+					serv_temp.append(s)
+			services = serv_temp
 		l = p.starmap_async(get_subs, [(domain, x[1], fout, verbose) for x in services]).get()
 		subdomains = list(set([domain for sublist in l for domain in sublist]))
 	if fout:
