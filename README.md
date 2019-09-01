@@ -2,7 +2,7 @@
 
 Find domains and subdomains potentially related to a given domain.
 
-Inspired by [assetfinder](github.com/tomnomnom/assetfinder)
+Inspired by [assetfinder](http://github.com/tomnomnom/assetfinder)
 
 ## Installation
 
