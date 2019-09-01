@@ -16,8 +16,9 @@ Usage: assetfynder [OPTIONS] DOMAIN [OUT]
   output filename if one is given; else prints to stdout.
 
 Options:
-  --verbose  Output more information during execution
-  --help     Show this message and exit.
+  --verbose    Output more information during execution
+  --nowayback  Do not incorporate wayback machine results
+  --help       Show this message and exit.
 
 ```
 
