@@ -16,5 +16,5 @@ class Fetcher:
 				return None
 		except Exception as e:
 			if verbose:
-				print(e)
+				print(f'[*] Error fetching data: {e}')
 			return None
