@@ -23,5 +23,7 @@ class Fetch(Fetcher):
 			else:
 				return None
 		except Exception as e:
-			print(f'[*] Error parsing json for {self.service_url}: {e}')
+			if verbose:
+				print(f'[*] Error parsing json for {self.service_url}: {e}')
+				print(f'[*] Fetch returned: {c}')
 			return None
